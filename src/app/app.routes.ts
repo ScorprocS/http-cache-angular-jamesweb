@@ -9,5 +9,9 @@ export const routes: Routes = [
     {
         path:'programs/:id',
         loadComponent:()=>import('./program-detail/program-detail.component').then(m=>m.ProgramDetailComponent)
-    }
+    },
+    {
+        path:'images',
+        loadComponent:()=>import('./program-image/program-image.component').then(m=>m.ProgramImageComponent)
+    },
 ];

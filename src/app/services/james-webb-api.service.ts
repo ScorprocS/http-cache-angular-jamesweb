@@ -38,7 +38,7 @@ export interface ProgramPartDetail{
 export class JamesWebbApiService {
 
   readonly #httpClient = inject(HttpClient);
-  public static readonly API_URL = 'https://api.jwstapi.com/';
+  public static readonly API_URL = 'https://api.jwstapi.com';
   public static readonly API_KEY = '7bf69e85-8db2-40f6-b5df-5c28ca922d73';
 
   readonly path='program';
@@ -46,12 +46,15 @@ export class JamesWebbApiService {
   constructor() { }
 
   public getAllProgram():Observable<Program[]>{
-    return this.#httpClient.get<ApiResponse>(`${JamesWebbApiService.API_URL}${this.path}/list`).pipe(map((res:ApiResponse)=> res.body));
-
+    return this.#httpClient.get<ApiResponse>(`${JamesWebbApiService.API_URL}/${this.path}/list`).pipe(map((res:ApiResponse)=> res.body));
   }
 
   public getProgramById(id:string,page:number=1,perPage:number=10):Observable<ProgramPartDetail[]>{
-    return this.#httpClient.get<ApiResponse>(`${JamesWebbApiService.API_URL}${this.path}/id/${id}?page=${page}&perPage=${perPage}`).pipe(map((res:ApiResponse)=> res.body));
+    return this.#httpClient.get<ApiResponse>(`${JamesWebbApiService.API_URL}/${this.path}/id/${id}?page=${page}&perPage=${perPage}`).pipe(map((res:ApiResponse)=> res.body));
+  }
+
+  public getAllByFileType(type:'jpg' | 'ecsv' | 'fits' | 'json',page:number=1,perPage:number=10):Observable<ProgramPartDetail[]>{
+       return this.#httpClient.get<ApiResponse>(`${JamesWebbApiService.API_URL}/all/type/${type}?page=${page}&perPage=${perPage}`).pipe(map((res:ApiResponse)=> res.body));
   }
 
 
