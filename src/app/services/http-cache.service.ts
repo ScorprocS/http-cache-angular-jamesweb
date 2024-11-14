@@ -18,7 +18,7 @@ export class HttpCacheService {
     //read from localStorage
     const caches = this.#localStorageService.getObject(this.LOCAL_STORAGE_KEY);
     if(caches){
-      this.#caches = caches;
+      this.#caches = new Map(caches);
     }
   }
 
@@ -40,7 +40,7 @@ export class HttpCacheService {
       expiration: new Date().getTime() + HttpCacheService.cacheDuration,
       responseDate: new Date().getTime(),
     });
-    this.#localStorageService.setObject(this.LOCAL_STORAGE_KEY, this.#caches);
+    this.#localStorageService.setObject(this.LOCAL_STORAGE_KEY, Array.from(this.#caches.entries()));
   }
 
 
