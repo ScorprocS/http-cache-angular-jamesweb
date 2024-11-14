@@ -45,7 +45,7 @@ export class ProgramImageComponent {
   }
 
   pageEvent(event:PageEvent):void{
-    //this.pageSize.set(event.pageSize);
+    this.pageSize.set(event.pageSize);
     this.pageNumber.set(event.pageIndex);
 
   }
