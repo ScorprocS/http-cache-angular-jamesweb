@@ -42,7 +42,7 @@ export class ProgramDetailComponent {
     effect(()=>{
       //this.programDetails =  toSignal(this.#jamesWebbApiService.getProgramById(this.id()),{initialValue:[]});
       this.#jamesWebbApiService.getProgramById(this.id(),this.pageNumber()).subscribe((res)=>this.programDetails.set(res))
-    })
+    },{allowSignalWrites:true});
   }
   
  

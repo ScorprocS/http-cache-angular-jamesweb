@@ -9,7 +9,7 @@ type Cache = { response: HttpResponse<unknown>; expiration: number; responseDate
 export class HttpCacheService {
   readonly #localStorageService = inject(LocalStorageService);
   private readonly LOCAL_STORAGE_KEY = 'httpCache'
-  static readonly cacheDuration = 10000;
+  static readonly cacheDuration = 10_000_000;
   #caches = new Map<string,Cache>();
 
   constructor() { }
@@ -19,12 +19,14 @@ export class HttpCacheService {
     const caches = this.#localStorageService.getObject(this.LOCAL_STORAGE_KEY);
     if(caches){
       this.#caches = new Map(caches);
+      console.log(this.#caches)
     }
   }
 
   get(req: HttpRequest<unknown>): HttpResponse<unknown> | undefined {
     const url = req.urlWithParams;
     const cached = this.#caches.get(url);
+    console.log(cached)
 
     if (!cached || cached.expiration <= new Date().getTime()) {
       return undefined;
@@ -42,7 +44,4 @@ export class HttpCacheService {
     });
     this.#localStorageService.setObject(this.LOCAL_STORAGE_KEY, Array.from(this.#caches.entries()));
   }
-
-
-
 }

@@ -1,15 +1,16 @@
-import { HttpResponse, type HttpInterceptorFn } from '@angular/common/http';
+import { HttpEvent, HttpResponse, type HttpInterceptorFn } from '@angular/common/http';
 import { HttpCacheService } from './http-cache.service';
 import { inject } from '@angular/core';
-import { of, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 
 
 
-export const httpCacheInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
+export const httpCacheInterceptor: HttpInterceptorFn = (req, next): Observable<HttpEvent<any>> => {
   const cacheService = inject(HttpCacheService);
 
   if(req.method ==='GET'){
     const cachedReq = cacheService.get(req);
+    console.log(cachedReq);
     return cachedReq?of(cachedReq):next(req).pipe(
       tap((stateEvent) => {
         if (stateEvent instanceof HttpResponse) {

@@ -41,7 +41,7 @@ export class ProgramImageComponent {
   constructor(){
     effect(()=>{
       this.#jamesWebbApiService.getAllByFileType('jpg',this.pageNumber(),this.pageSize()).subscribe((res)=>this.programDetails.set(res))
-    })
+    },{allowSignalWrites:true});
   }
 
   pageEvent(event:PageEvent):void{
